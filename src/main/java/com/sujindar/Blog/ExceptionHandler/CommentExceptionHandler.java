@@ -1,0 +1,27 @@
+package com.sujindar.Blog.ExceptionHandler;
+
+import com.sujindar.Blog.Exception.CommentNotFoundException;
+import com.sujindar.Blog.Exception.InvalidCommentDataException;
+import com.sujindar.Blog.Util.ErrorResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+@ControllerAdvice
+public class CommentExceptionHandler {
+    @ExceptionHandler(value = CommentNotFoundException.class)
+    public ResponseEntity handleCommentNotFoundException() {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setError("Invalid Comment Id");
+        errorResponse.setStatus(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(errorResponse,HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(value = InvalidCommentDataException.class)
+    public ResponseEntity handleInvalidBlogDataException() {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setError("Invalid Comment Data");
+        errorResponse.setStatus(HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity(errorResponse,HttpStatus.NOT_ACCEPTABLE);
+    }
+}
